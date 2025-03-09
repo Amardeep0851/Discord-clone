@@ -1,5 +1,5 @@
 "use client"
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import qs from "query-string";
 import {format} from "date-fns"
 import { useParams } from "next/navigation";
@@ -42,7 +42,12 @@ export default function ChatMessages({type, name, chatId, member, apiUrl, socket
   const queryKey = `chat:${chatId}`;
   const addKey = `chat:${chatId}:message`;
   const updateKey = `chat:${chatId}:message:update`;
-  const DATE_FORMAT = "d MMM yyyy, HH:mm"
+  const DATE_FORMAT = "d MMM yyyy, HH:mm";
+  const [isEditing, setIsEditing] = useState<string|null | undefined>(null);
+  console.log(isEditing);
+  const handleMessageEditing = (id?:string | null | undefined) => {
+      setIsEditing(id);
+    };
 
   const {data, fetchNextPage, hasNextPage, isFetchingNextPage, status} = useChatQuery({
     queryKey,
@@ -51,7 +56,6 @@ export default function ChatMessages({type, name, chatId, member, apiUrl, socket
     paramValue,
     serverId 
   });
-
   if(status === "pending"){
     return (
       <div className="flex justify-center items-center flex-col flex-1">
@@ -73,7 +77,7 @@ export default function ChatMessages({type, name, chatId, member, apiUrl, socket
   
   return (
 
-    <div className="px-4 pt-4 pb-4 flex-1 flex flex-col overflow-y-auto h-full border-b-[1px]">
+    <div className=" relative px-4 pt-4 pb-4 flex-1 flex flex-col overflow-y-auto h-full border-b-[1px]">
       {!hasNextPage &&  <div className="flex-1"  />}
       {!hasNextPage && <ChatWelcomeMessage type={type} name={name}/>}
       
@@ -99,13 +103,21 @@ export default function ChatMessages({type, name, chatId, member, apiUrl, socket
               <ChatItem 
               key={message.id} 
               name={message.member.profile.name}
+              imageUrl={message.member.profile.imageUrl}
               content={message.content}
               fileUrl={message.fileUrl}
-              timestamp={
-                format(new Date(message.createAt), DATE_FORMAT)
-              }
+              timestamp={ format(new Date(message.createAt), DATE_FORMAT) }
               deleted={message.deleted}
               isUpdated={message.createAt !== message.updateAt}
+              currentMember={member}
+              messageMembr={message.member}
+              isEditing={isEditing}
+              handleMessageEditing={handleMessageEditing}
+              messageId={message.id}
+              memberRole={message.member.role}
+              socketUrl={socketUrl}
+              socketQuery={socketQuery}
+              
               />
                 
             ))}

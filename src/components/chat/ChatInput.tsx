@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import EmojiPicker from "./EmojiPicker";
+import { useModel } from "@/store/useModelStore";
 
 
 interface ChatInputProps{
@@ -29,6 +30,7 @@ const formSchema = z.object({
 });
 function ChatInput({apiUrl, query, name, type}:ChatInputProps) {
     const router = useRouter();
+    const {onOpen} = useModel();
     const form = useForm<z.infer<typeof formSchema>>({
     resolver:zodResolver(formSchema),
     defaultValues:{
@@ -52,8 +54,8 @@ function ChatInput({apiUrl, query, name, type}:ChatInputProps) {
   }
   const isLoading = form.formState.isSubmitting;
   return (
-    
-      <Form {...form}>
+    <div className="sticky bottom-0 left-0 right-0 w-full bg-inherit">
+      <Form {...form} >
       <form onSubmit={form.handleSubmit(onSubmit)} >
         <FormField 
         control={form.control}
@@ -64,7 +66,9 @@ function ChatInput({apiUrl, query, name, type}:ChatInputProps) {
               <div className="m-4 mb-6 bg-zinc-200/90 dark:bg-zinc-700/75 text-zinc-600 dark:text-zinc-200 flex flex-row items-center rounded-md py-1 px-3 ">
                 <Button 
                 variant="ghost"
+                type="button"
                 className="h-[24px] w-[24px] rounded-full bg-zinc-400  hover:bg-zinc-600 dark:bg-zinc-500 dark:hover:bg-zinc-400 p-1 flex items-center justify-center transition duration-300"
+                onClick={() => onOpen("messageFile", {apiUrl, query})}
                 >
                   <Plus className="text-white dark:text-[#313338] z-50"/>
                 </Button>
@@ -87,7 +91,7 @@ function ChatInput({apiUrl, query, name, type}:ChatInputProps) {
         />
       </form>
     </Form>
-    
+    </div>    
   )
 }
 

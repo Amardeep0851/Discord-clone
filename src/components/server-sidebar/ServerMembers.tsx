@@ -19,7 +19,7 @@ function ServerMembers({role, member}:ServerMembersProps) {
   const params = useParams();
 
   const onClick = () => {
-    router.push(`/servers/${params?.serverId}/converstaion/${member.id}`)
+    router.push(`/servers/${params?.serverId}/conversation/${member.id}`)
   }
   return (
     <button className={cn("flex gap-2 items-center cursor-pointer w-full dark:hover:bg-zinc-700/50 hover:bg-zinc-200 p-2 rounded font-semibold text-sm transition duration-200",)}

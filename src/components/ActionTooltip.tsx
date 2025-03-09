@@ -22,8 +22,8 @@ function ActionTooltip({children, label, align, side}: ActionTooltipProps) {
       <TooltipTrigger asChild>
       {children}
       </TooltipTrigger >
-      <TooltipContent side={side} align={align} className="p-2 z-40 transition duration-300 ">
-      <Button className="font-semibold text-md capitalize dark:bg-zinc-900 dark:text-zinc-100 bg-zinc-300 text-zinc-900 hover:bg-zinc-300 dark:hover:bg-zinc-900">
+      <TooltipContent side={side} align={align} className="p-2 z-40 transition duration-300  ">
+      <Button className="font-semibold text-sm capitalize dark:bg-zinc-900 dark:text-zinc-100 bg-zinc-300 text-zinc-900 hover:bg-zinc-300 dark:hover:bg-zinc-900">
       {label?.toLowerCase()}
       </Button>
       </TooltipContent>

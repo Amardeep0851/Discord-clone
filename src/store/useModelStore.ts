@@ -11,12 +11,13 @@ export type ModelType =
 | "deleteChannel"
 | "invitePeople"
 | "managerMember"
+| "messageFile"
 
 interface ModelData {
   server?:Server;
   channel?:Channel;
   channelType?:ChannelType;
-  apiUrl?:String;
+  apiUrl?:string;
   query?:Record<string, any>
 }
 

@@ -13,7 +13,7 @@ interface chatHeaderProps{
 
 function ChatHeader({name, serverId, type, imageurl}: chatHeaderProps) {
   return (
-    <div className="h-12 px-3 text-base font-semibold flex items-center w-full border-b-2 border-neutral-200 dark:border-neutral-800">
+    <div className="h-12 px-3 text-base font-semibold flex items-center w-full border-b-2 border-neutral-200 dark:border-neutral-800 sticky top-0 bg-zinc-800 z-50">
       
       <MobileToggle serverId={serverId} /> 
       

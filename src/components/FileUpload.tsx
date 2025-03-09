@@ -8,44 +8,44 @@ import "@uploadthing/react/styles.css";
 type FileUploadProps = {
   endpoint: "serverImage" | "messageFile";
   value: string;
-  onChange:(url?:string) => void;
+  onChange:(url?:string, fileType?:string | undefined) => void;
 }
 
 function FileUpload({endpoint, value, onChange}:FileUploadProps) {
-  const fileType = value?.split(".").pop()?.toLowerCase();
-  
-  if(value && fileType !== "pdf"){
+  const [uploadedFileType, setUploadedFileType] = useState<string | undefined>();
+  if(value && uploadedFileType !== "application/pdf"){
+    console.log("file is image");
     return (
-    <>
+    <div className="w-full flex justify-center">
       <div className="w-20 h-20 relative">
       <Image src={value} alt="Uploaded Image" fill className="rounded-full" />
       <button  type="button" 
       className="absolute top-0 right-0 z-30 rounded-full cursor-pointer" 
       onClick={() => {
-        return onChange("");
+        return onChange("", undefined);
         }}>
         <X className="h-5 w-5 bg-black text-white rounded-lg" />
       </button>
       </div>
       
-    </>
+    </div>
     )
   }
 
-  if(value && fileType === "pdf"){
+  if(value && uploadedFileType === "application/pdf"){
     return (
-      <>
-      <div className="w-20 h-20 relative">
+      <div className="flex justify-center">
+      <div className="w-20 h-20 relative ">
         <File className="w-20 h-20 " />
         <button  type="button" 
       className="absolute -top-1 right-1 z-30 rounded-full cursor-pointer" 
       onClick={() => {      
-        return onChange("");
+        return onChange("", undefined);
         }}>
         <X className="h-6 w-6 bg-black text-white rounded-md" />
       </button>
       </div>
-      </>
+      </div>
     )
   }
 
@@ -53,9 +53,9 @@ function FileUpload({endpoint, value, onChange}:FileUploadProps) {
     <>
     <UploadDropzone 
     endpoint={endpoint}
-    onClientUploadComplete={(res) => {
-      onChange(res?.[0]?.url);
-      console.log(res?.[0]?.url);
+    onClientUploadComplete={(res) => {   
+        onChange(res?.[0]?.url,res?.[0]?.type || undefined);
+        setUploadedFileType(res?.[0]?.type)
     }}
     onUploadError={(error:Error) => console.error(error.message)}
     />

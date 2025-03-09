@@ -10,6 +10,7 @@ import DeleteServerModel from "@/components/models/DeleteServer"
 import LeaveServerModel from "@/components/models/LeaveServerModel"
 import EditChannel from "@/components/models/EditChannelModel"
 import DeleteChannelModel from "@/components/models/DeleteChannelModel"
+import MessageFile from "../models/MessageFile"
 function ModelProviders() {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -29,6 +30,7 @@ function ModelProviders() {
     <LeaveServerModel />
     <EditChannel />
     <DeleteChannelModel />
+    <MessageFile />
 
     
     </>
