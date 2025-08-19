@@ -62,7 +62,7 @@ function InvitePeople() {
               Invite People
             </DialogTitle>
             <DialogDescription className="text-zinc-600 text-sm border-t-[1px] border-zinc-600 pt-3">
-            Share this link with others to invite them and grow your community. It's a simple way to connect and collaborate with more people!
+            Share this link with others to invite them and grow your community. It&apos;s a simple way to connect and collaborate with more people!
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-row space-x-3">

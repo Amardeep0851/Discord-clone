@@ -67,7 +67,7 @@ function DeleteChannelModel() {
           Delete Channel 
         </DialogTitle>
         <DialogDescription className="text-zinc-800 text-base px-5 py-4 ">
-          Are you sure you want to delete "{channel?.name}"? This channel will be deleted permanently.
+          Are you sure you want to delete &quot;{channel?.name}&quot;? This channel will be deleted permanently.
         </DialogDescription>
       </DialogHeader>
       <DialogFooter className="bg-zinc-200 p-2 flex gap-3">

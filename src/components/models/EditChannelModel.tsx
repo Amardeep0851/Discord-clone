@@ -125,11 +125,11 @@ function EditChannel() {
               </FormLabel>
               <FormControl>
                 <Input 
+                {...field}
                 disabled={isLoading}
                 value={field.value}
                 onChange={field.onChange}
                 className="text-black bg-zinc-100 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-zinc-700 border-zinc-500 hover:shadow-md transition"
-                {...field}
                 />
               </FormControl>
               <FormMessage />
