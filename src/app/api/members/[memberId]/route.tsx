@@ -2,20 +2,21 @@ import { NextResponse } from "next/server";
 import { currentUserProfile } from "@/config/currentProfile";
 import { db } from "@/config/db";
 
-export async function PATCH(req:Request, {params}:{params:{memberId:string}}){
+export async function PATCH(req:Request, {params}:{params:Promise<{memberId:string}>}){
   try {
     const profile = await currentUserProfile();
 
   const {searchParams} = new URL(req.url);
   const serverId = searchParams.get("serverId");
   const {memberRole} = await req.json();
+  const {memberId} = await params;
 
 
   if(!profile?.userId){
     return new NextResponse("Unauthorized access.", {status:400})
   }
 
-  if(!params.memberId){
+  if(!memberId){
     return new NextResponse("Member Id is missing.", {status:400})
   }
 
@@ -32,7 +33,7 @@ export async function PATCH(req:Request, {params}:{params:{memberId:string}}){
       members:{
         update:{
           where:{
-            id:params.memberId,
+            id:memberId,
             profileId:{
               not:profile.id
             }
@@ -68,12 +69,13 @@ export async function PATCH(req:Request, {params}:{params:{memberId:string}}){
   
 }
 
-export async function DELETE(req:Request, {params}:{params:{memberId:string}}){
+export async function DELETE(req:Request, {params}:{params:Promise<{memberId:string}>}){
   try {
   const profile = await currentUserProfile();
-  const memberId:string = params.memberId;
   const {searchParams} = new URL(req.url)
   const serverId: string | null = searchParams.get("serverId");
+  const {memberId} = await params;
+
   if(!profile){
     return new NextResponse("Unauthorized access.", {status:400})
   }

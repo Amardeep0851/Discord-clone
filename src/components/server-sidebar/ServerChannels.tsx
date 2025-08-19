@@ -36,7 +36,7 @@ function ServerChannels({channel, role, server, }:ServerChannelsProps) {
       onOpen(action, {server, channel})
     }
   return (
-    <div className={cn(" group flex justify-between pl-2 py-2 w-full items-center text-sm font-semibold rounded transition-all text-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-700/60 hover:bg-zinc-200/50 cursor-pointer", params.channelId === channel.id && "dark:bg-zinc-700/80 bg-zinc-200")}
+    <div className={cn(" group flex justify-between pl-2 py-2 w-full items-center text-sm font-semibold rounded transition-all text-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-700/60 hover:bg-zinc-200/50 cursor-pointer", params?.channelId === channel.id && "dark:bg-zinc-700/80 bg-zinc-200")}
     onClick={() => changeRoute(channel.id)}
     >
       <button className="flex w-full ">

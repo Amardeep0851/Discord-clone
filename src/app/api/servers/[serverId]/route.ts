@@ -6,24 +6,25 @@ import { MemberRole } from "@prisma/client";
 
 export async function PATCH(
   req:Request,
-  {params}:{params:{serverId:string}}
+  {params}:{params:Promise<{serverId:string}>}
 ){
   try {
     
-  const {imageUrl, serverName} = await req.json() as {imageUrl:string, serverName:string}
+  const {imageUrl, serverName} = await req.json() as {imageUrl:string, serverName:string};
+  const {serverId} = await params
   const profile = await currentUserProfile();
 
   if(!profile){
     return new NextResponse("Unauthorized access.", {status:401})
   }
 
-  if(!params.serverId){
+  if(!serverId){
     return new NextResponse("Server ID is missing.")
   }
 
   const server = await db.server.update({
     where:{
-      id:params.serverId
+      id:serverId
     },
     data:{
       name:serverName,
@@ -56,7 +57,7 @@ export async function PATCH(
 
 export async function DELETE(
   req:Request,
-  {params}:{params:{serverId:string}}
+  {params}:{params:Promise<{serverId:string}>}
 ){
   const {serverId} = await params;
   const Profile = await currentUserProfile();

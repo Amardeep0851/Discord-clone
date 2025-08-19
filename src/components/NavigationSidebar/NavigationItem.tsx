@@ -24,7 +24,7 @@ function NavigationItem({name, serverId, imageUrl}:NavigationItemProps) {
     <button className="group relative my-2 hover:shadow-md rounded-[24px] hover:shadow-zinc-700" onClick={onClick}>
     <div className={cn("w-[4px] absolute left-0 bg-primary rounded-full transition-all ",
       params?.serverId !== serverId && "group-hover:h-[20px] z-10 duration-1000",
-      params.serverId === serverId ? "h-[48px] z-50" : "h-[4px]"
+      params?.serverId === serverId ? "h-[48px] z-50" : "h-[4px]"
     )} />
     <div className="relative group w-[48px] h-[48px] rounded-[16px] transition-all overflow-hidden ">
     <Image src={imageUrl} alt={name} fill />

@@ -37,7 +37,7 @@ export function useChatScroll({
     return () => {
       topRefDiv.removeEventListener("scroll", handleScroll);
     };
-  }, [topRef, loadMore]);
+  }, [topRef, loadMore, shouldLoadMore]);
 
   useEffect(() => {
     const bottomCurrent = bottomRef?.current;
@@ -63,5 +63,5 @@ export function useChatScroll({
         });
       }, 200);
     }
-  }, [bottomRef?.current, bottomRef, topRef, count, hasStarted]);
+  }, [bottomRef, topRef, count, hasStarted]);
 }

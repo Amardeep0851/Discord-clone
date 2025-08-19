@@ -67,7 +67,7 @@ export default async function handler(
 
     const isMessageOwner = directMessage.memberId === member.id;
     const isAdmin = member.role === MemberRole.ADMIN;
-    const isModerator = member.role === MemberRole.MODERATOR;
+    const isModerator = member.role === MemberRole.MODERATE;
     const canModify = isMessageOwner || isAdmin || isModerator;
 
     if (!canModify) return res.status(401).json({ error: "Unauthorized" });

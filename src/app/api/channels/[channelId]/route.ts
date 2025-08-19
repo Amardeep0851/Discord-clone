@@ -4,17 +4,18 @@ import { db } from "@/config/db";
 import { currentUserProfile } from "@/config/currentProfile";
 import { MemberRole } from "@prisma/client";
 
-export async function DELETE(req:Request, {params}:{params:{channelId:string}}){
+export async function DELETE(req:Request, {params}:{params:Promise<{channelId:string}>}){
   
   try {
     const profile = await currentUserProfile();  
     const {searchParams} = new URL(req.url);
     const serverId = searchParams.get("serverId");
+    const {channelId} = await params
 
     if(!serverId){
       return new NextResponse("ServerId is missing.", {status:400})
     }
-    if(!params.channelId){
+    if(!channelId){
       return new NextResponse("channel Id is missing.", {status:400})
     }
     if(!profile?.id){
@@ -35,7 +36,7 @@ export async function DELETE(req:Request, {params}:{params:{channelId:string}}){
       data:{
         channels:{
           delete:{
-              id:params.channelId,
+              id:channelId,
               name:{
                 not:"general"
               }          
@@ -51,14 +52,15 @@ export async function DELETE(req:Request, {params}:{params:{channelId:string}}){
   }
 }
 
-export async function PATCH(req:Request, {params}:{params:{channelId:string}}){
+export async function PATCH(req:Request, {params}:{params:Promise<{channelId:string}>}){
   try{
     const profile = await currentUserProfile();
     const {searchParams} = new URL(req.url);
     const serverId = searchParams.get("serverId");
+    const {channelId} = await params
     const {name, type} = await req.json();
 
-    if(!params.channelId){
+    if(!channelId){
       return new NextResponse("Channel id is missing",{status:400});
     }
     if(!serverId){
@@ -89,7 +91,7 @@ export async function PATCH(req:Request, {params}:{params:{channelId:string}}){
         channels:{
           update:{
             where:{
-              id:params.channelId
+              id:channelId
             },
             data:{
               name,

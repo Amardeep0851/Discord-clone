@@ -41,10 +41,10 @@ function ServerSearch({ data }: ServerSerachProps) {
   const onClickOpen = (id:string, type:string) => {
     setOpenCommandDialog(false)
     if(type === "channel"){
-      router.push(`/servers/${params.serverId}/channel/${id}`);
+      router.push(`/servers/${params?.serverId}/channel/${id}`);
     }
     if(type === "member"){
-      router.push(`/servers/${params.serverId}/conversations/${id}`);
+      router.push(`/servers/${params?.serverId}/conversations/${id}`);
     }
   }
 
