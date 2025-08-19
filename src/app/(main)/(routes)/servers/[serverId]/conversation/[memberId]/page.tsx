@@ -1,72 +1,92 @@
-import React from 'react'
-
+import React from "react";
 import { RedirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
+import { currentUserProfile } from "@/config/currentProfile";
 import { db } from "@/config/db";
 import getOrCreateConverstaion from "@/config/converstaion";
-import { currentUserProfile } from "@/config/currentProfile";
 import ChatHeader from "@/components/chat/ChatHeader";
 import ChatMessages from "@/components/chat/ChatMessages";
 import ChatInput from "@/components/chat/ChatInput";
+import MediaRoom from "@/components/chat/MediaRoom";
+// import { MediaRoom } from "@/components/media-room";
 
-interface conversationIdProps{
-  serverId:string;
-  memberId:string
+interface MemberIdPageProps {
+  params: {
+    memberId: string;
+    serverId: string;
+  };
+  searchParams: {
+    video?: boolean;
+  };
 }
 
-async function page({params}:{params:conversationIdProps}) {
-    const profile = await currentUserProfile();
-    const {serverId, memberId} = await params;
+export default async function MemberIdPage({
+  params: { memberId, serverId },
+  searchParams: { video }
+}: MemberIdPageProps) {
+  const profile = await currentUserProfile();
 
-    if(!profile){
-      return <RedirectToSignIn />;
+  if (!profile) return <RedirectToSignIn />;
+
+  const currentMember = await db.member.findFirst({
+    where: {
+      serverId,
+      profileId: profile.id
+    },
+    include: {
+      profile: true
     }
+  });
 
-    const currentMember = await db.member.findFirst({
-      where:{
-        serverId:serverId,
-        profileId:profile.id
-      },
-      include:{
-        profile:true
-      }
-    });
-    if(!currentMember){
-      return redirect("/sign-in")
-    }
-    const converstaion = await getOrCreateConverstaion(currentMember.id, memberId);
-    if(!converstaion){
-      redirect(`servers/${serverId}`)
-    }
+  if (!currentMember) return redirect("/");
 
-    const {memberOne, memberTwo} = converstaion;
+  const conversation = await getOrCreateConverstaion(
+    currentMember.id,
+    memberId
+  );
 
-    const otherMember = memberOne.profile.id === profile.id ? memberTwo : memberOne
+  if (!conversation) return redirect(`/servers/${serverId}`);
 
-    return (
-    <div>
+  const { memberOne, memberTwo } = conversation;
 
-      <ChatHeader 
-      name={otherMember.profile.name}
-      imageurl={otherMember.profile.imageUrl}
-      serverId={serverId}
-      type="conversation"
+  const otherMember =
+    memberOne.profileId === profile.id ? memberTwo : memberOne;
+
+  return (
+    <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
+      <ChatHeader
+        imageUrl={otherMember.profile.imageUrl}
+        name={otherMember.profile.name}
+        serverId={serverId}
+        type="conversation"
       />
-      
-      
-      <ChatInput 
-      apiUrl="/api/socket/direct-messages"
-      query={{
-        conversationId:converstaion.id
-      }}
-      name={otherMember.profile.name}
-      type="conversation"
-      />
-
-      {/* https://stackoverflow.com/questions/76393897/how-to-call-a-notification-toast-after-a-server-action-in-nextjs13 */}
+      {video && <MediaRoom chatId={conversation.id} video audio />}
+      {!video && (
+        <>
+          <ChatMessages
+            member={currentMember}
+            name={otherMember.profile.name}
+            chatId={conversation.id}
+            type="conversation"
+            apiUrl="/api/direct-messages"
+            paramKey="conversationId"
+            paramValue={conversation.id}
+            socketUrl="/api/socket/direct-messages"
+            socketQuery={{
+              conversationId: conversation.id
+            }}
+          />
+          <ChatInput
+            name={otherMember.profile.name}
+            type="conversation"
+            apiUrl="/api/socket/direct-messages"
+            query={{
+              conversationId: conversation.id
+            }}
+          />
+        </>
+      )}
     </div>
-  )
+  );
 }
-
-export default page

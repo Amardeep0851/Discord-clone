@@ -1,16 +1,18 @@
 "use client"
-import React, { Fragment, useState } from 'react';
-import qs from "query-string";
-import {format} from "date-fns"
+import {format} from "date-fns";
 import { useParams } from "next/navigation";
-import { useChatQuery } from "@/hooks/use-chat-query";
-import { Member, Message, Profile } from "@prisma/client";
 import { Loader2, ServerCrash } from "lucide-react";
+import { Member, Message, Profile } from "@prisma/client";
+import React, { ElementRef, Fragment, useRef, useState } from 'react';
 
-import ChatWelcomeMessage from "./ChatWelcomeMessage";
 import ChatItem from "./ChatItem";
+import ChatWelcomeMessage from "./ChatWelcomeMessage";
 
 import { Button } from "@/components/ui/button";
+
+import { useChatQuery } from "@/hooks/use-chat-query";
+import { useChatSocket } from "@/hooks/use-chat-socket";
+import { useChatScroll } from "@/hooks/use-chat-scroll";
 
 interface ChatMessagesProps{
   type:"channel" | "conversation";
@@ -19,10 +21,7 @@ interface ChatMessagesProps{
   member:Member; 
   apiUrl:string; 
   socketUrl:string; 
-  socketQuery:{
-    channelId:string;
-    serverId:string;
-  },  
+  socketQuery:Record<string, string>,  
   paramKey:"channelId" | "conversationId";
   paramValue:string;
 }
@@ -35,6 +34,11 @@ export default function ChatMessages({type, name, chatId, member, apiUrl, socket
 
   const params = useParams();
   const serverId = params?.serverId;
+
+  const topRef = useRef<ElementRef<"div">>(null)
+  const bottomRef = useRef<ElementRef<"div">>(null)
+  const [isEditing, setIsEditing] = useState<string|null | undefined>(null);
+
   if (!serverId || Array.isArray(serverId)) {
     throw new Error('Invalid serverId');
   }
@@ -42,9 +46,8 @@ export default function ChatMessages({type, name, chatId, member, apiUrl, socket
   const queryKey = `chat:${chatId}`;
   const addKey = `chat:${chatId}:message`;
   const updateKey = `chat:${chatId}:message:update`;
+  console.log(queryKey, addKey, updateKey);
   const DATE_FORMAT = "d MMM yyyy, HH:mm";
-  const [isEditing, setIsEditing] = useState<string|null | undefined>(null);
-  console.log(isEditing);
   const handleMessageEditing = (id?:string | null | undefined) => {
       setIsEditing(id);
     };
@@ -56,6 +59,21 @@ export default function ChatMessages({type, name, chatId, member, apiUrl, socket
     paramValue,
     serverId 
   });
+
+  useChatSocket({
+    queryKey,
+    addKey,
+    updateKey
+  })
+
+  useChatScroll({
+    topRef,
+    bottomRef,
+    loadMore:fetchNextPage,
+    count:data?.pages?.[0]?.items?.length ?? 0,
+    shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
+  })
+
   if(status === "pending"){
     return (
       <div className="flex justify-center items-center flex-col flex-1">
@@ -77,7 +95,10 @@ export default function ChatMessages({type, name, chatId, member, apiUrl, socket
   
   return (
 
-    <div className=" relative px-4 pt-4 pb-4 flex-1 flex flex-col overflow-y-auto h-full border-b-[1px]">
+    <div className=" relative px-4 pt-4 pb-4 flex-1 flex flex-col overflow-y-auto border-b-[1px] h-[1900px] "
+    onScroll={() => console.log("dd")}
+    ref={topRef}
+    >
       {!hasNextPage &&  <div className="flex-1"  />}
       {!hasNextPage && <ChatWelcomeMessage type={type} name={name}/>}
       
@@ -101,9 +122,9 @@ export default function ChatMessages({type, name, chatId, member, apiUrl, socket
           <Fragment key={index}>
             {page.items.map((message:MessageWithMemberWithProfile) => (
               <ChatItem 
-              key={message.id} 
-              name={message.member.profile.name}
-              imageUrl={message.member.profile.imageUrl}
+              key={message?.id} 
+              name={message?.member?.profile?.name}
+              imageUrl={message?.member?.profile?.imageUrl}
               content={message.content}
               fileUrl={message.fileUrl}
               timestamp={ format(new Date(message.createAt), DATE_FORMAT) }
@@ -114,7 +135,7 @@ export default function ChatMessages({type, name, chatId, member, apiUrl, socket
               isEditing={isEditing}
               handleMessageEditing={handleMessageEditing}
               messageId={message.id}
-              memberRole={message.member.role}
+              memberRole={message?.member?.role}
               socketUrl={socketUrl}
               socketQuery={socketQuery}
               
@@ -124,7 +145,7 @@ export default function ChatMessages({type, name, chatId, member, apiUrl, socket
           </Fragment>
         ))}
       </div>
-      
+      <div ref={bottomRef} />
     </div>
   )
 }

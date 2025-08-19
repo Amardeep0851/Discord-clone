@@ -11,8 +11,7 @@ interface ChatQyeryProps {
 
 export const useChatQuery = ({queryKey, apiUrl, paramKey,  paramValue, serverId }:ChatQyeryProps) => {
 
-  const isConnected = useSocket();
-
+  const {isConnected }= useSocket();
 
   const fetchMessages = async (pageParam = undefined) => {
     const url = qs.stringifyUrl({

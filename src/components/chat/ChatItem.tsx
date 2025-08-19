@@ -85,7 +85,6 @@ function ChatItem({
   const router = useRouter();
   const params = useParams();
   const [loadingState, setLoadingState] = useState(false);
-  console.log(loadingState);
   const isAdmin = MemberRole.ADMIN === currentMember.role;
   const isModerate = MemberRole.MODERATE === currentMember.role;
   const isOwner = currentMember.role === memberRole;
@@ -161,7 +160,6 @@ function ChatItem({
 
   
   const isLoading = form.formState.isSubmitting;
-  console.log(loadingState);
   return (
     <div className={cn("flex flex-row group mt-2 pr-2 ")}>
       <div className="flex flex-row  w-full bg-zinc-900/5 group-hover:bg-black/10 rounded-md pt-1 pb-4 pl-2 transition duration-200 relative ">

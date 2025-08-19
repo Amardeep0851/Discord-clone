@@ -8,7 +8,7 @@ import React, {
 import {io as ClientIo} from "socket.io-client"
 
 type SocketContextTypes = {
-  socket:null | any;
+  socket:null | ReturnType<typeof ClientIo>;
   isConnected:boolean;
 }
 
@@ -22,13 +22,19 @@ export const useSocket = () => {
 }
 
 export const SocketProvider = ({children}:{children:React.ReactNode}) => {
-  const [socket, setSocket] = useState(null);
+  const [socket, setSocket] = useState<null | ReturnType<typeof ClientIo>>(null);
   const [isConnected, setIsConnected] = useState(false);
 
   
   useEffect(() => {
-    const socketInstance = new (ClientIo as any)(
-      process.env.NEXT_PUBLIC_SITE_URL!,
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+    console.log("Socket connecting to:", siteUrl);
+
+    if (!siteUrl) {
+      console.error("NEXT_PUBLIC_SITE_URL is not set!");
+      return;
+    }
+    const socketInstance = new (ClientIo as any)(siteUrl,
       {
         path:"/api/socket/io",
         addTrailingSlash:false
@@ -36,10 +42,16 @@ export const SocketProvider = ({children}:{children:React.ReactNode}) => {
     );
 
     socketInstance.on("connect", () => {
+      console.log("Connected to WebSocket");
       setIsConnected(true);
     });
     socketInstance.on("disconnect", () => {
-      setIsConnected(true);
+      console.log("Disconnected from WebSocket");
+      setIsConnected(false);
+    });
+
+    socketInstance.on("connect_error", (error:any) => {
+      console.log("Socket connection error:", error);
     });
 
     setSocket(socketInstance);
