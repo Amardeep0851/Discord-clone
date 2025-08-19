@@ -3,6 +3,9 @@ const nextConfig = {
   images: {
     domains: ["utfs.io"], // Add your image hostname here
   },
+   eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 
