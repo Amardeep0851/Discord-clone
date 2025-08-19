@@ -109,7 +109,7 @@ function EditChannel() {
           Edit Channel 
         </DialogTitle>
         <DialogDescription className="text-zinc-700 pt-3">
-        Change channel's name and/or image. After making the changes, click the update button to save the information.
+        Change channel&apos;s name and/or image. After making the changes, click the update button to save the information.
         </DialogDescription>
       </DialogHeader>
       <Form {...form}>

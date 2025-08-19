@@ -12,22 +12,19 @@ import MediaRoom from "@/components/chat/MediaRoom";
 // import { MediaRoom } from "@/components/media-room";
 
 interface MemberIdPageProps {
-  params: {
-    memberId: string;
-    serverId: string;
-  };
-  searchParams: {
-    video?: boolean;
-  };
+  params: Promise<{ memberId: string, serverId: string }>;
+  searchParams: Promise<{video?: boolean; }>;
 }
 
-export default async function MemberIdPage({
-  params: { memberId, serverId },
-  searchParams: { video }
-}: MemberIdPageProps) {
-  const profile = await currentUserProfile();
+export default async function MemberIdPage({ params, searchParams }: MemberIdPageProps) {
 
-  if (!profile) return <RedirectToSignIn />;
+  const profile = await currentUserProfile();
+  const {serverId, memberId} = await params;
+  const {video} = await searchParams
+
+  if (!profile) {
+      return <RedirectToSignIn />;
+    }
 
   const currentMember = await db.member.findFirst({
     where: {

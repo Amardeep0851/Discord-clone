@@ -1,6 +1,12 @@
 import React from 'react'
 
-function MediaRoom() {
+interface MediaRoomProps {
+  chatId:string;
+  video:boolean;
+  audio:boolean;
+}
+
+function MediaRoom({chatId, video, audio}:MediaRoomProps) {
   return (
     <div>MediaRoom</div>
   )

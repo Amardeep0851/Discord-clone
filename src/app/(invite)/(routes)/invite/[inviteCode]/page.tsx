@@ -1,11 +1,14 @@
-import React from 'react';
+import { redirect } from "next/navigation";
+
 import { db } from "@/config/db";
 import { currentUserProfile } from "@/config/currentProfile";
-import { redirect } from "next/navigation";
-import { RedirectToSignIn } from "@clerk/nextjs";
 
-async function page({params}:{params:{inviteCode:string}}) {
-  const {inviteCode} = params;
+interface InviteCodeProps {
+  params:Promise<{inviteCode:string}>
+}
+
+async function page({params}:InviteCodeProps) {
+  const {inviteCode} = await params;
   const profile = await currentUserProfile();
 
   if(!profile){

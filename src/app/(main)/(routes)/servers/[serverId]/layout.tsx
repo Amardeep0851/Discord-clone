@@ -7,10 +7,7 @@ import { redirect } from "next/navigation";
 
 interface ServerlayoutProps{
   children:React.ReactNode, 
-  params:{
-    serverId:string
-    
-  }    
+  params:Promise<{serverId:string}>     
 }
 
 async function Layout({ children, params }:ServerlayoutProps) {

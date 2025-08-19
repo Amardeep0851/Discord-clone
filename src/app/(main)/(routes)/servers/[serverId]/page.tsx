@@ -4,13 +4,14 @@ import { db } from "@/config/db"
 import { currentUserProfile } from "@/config/currentProfile";
 import { redirect } from "next/navigation";
 
-export default async function page({params}:{params:{serverId:string}}) {
+export default async function page({params}:{params:Promise<{serverId:string}>}) {
 
   const profile = await currentUserProfile();
+  const {serverId} = await params
 
   const server = await db.server.findUnique({
     where:{
-      id:params.serverId,
+      id:serverId,
       members:{
         some:{
           profileId:profile?.id
@@ -30,5 +31,5 @@ export default async function page({params}:{params:{serverId:string}}) {
   if(!initialChannel){
     return null
   }
-  return redirect(`/servers/${params.serverId}/channel/${initialChannel?.id}`);
+  return redirect(`/servers/${serverId}/channel/${initialChannel?.id}`);
 }

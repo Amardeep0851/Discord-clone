@@ -11,16 +11,14 @@ import ChatMessages from "@/components/chat/ChatMessages";
 import ChatInput from "@/components/chat/ChatInput";
 
 interface chatPageProps{
-  channelId:string;
-  serverId:string;
+  params:Promise<{channelId:string, serverId:string}>
 }
 
-async function ChannelIdPage({params}:{params:chatPageProps}) {
+async function ChannelIdPage({params}:chatPageProps) {
   const profile = await currentUserProfile();
   if(!profile){return <RedirectToSignIn />}
   
-  const serverId = await params.serverId;
-  const channelId = await params.channelId;
+  const {serverId, channelId} = await params;
 
   const channel = await db.channel.findUnique({
     where:{
