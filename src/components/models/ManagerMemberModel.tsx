@@ -107,7 +107,7 @@ const ManagerMemberModel = () => {
         })
       }
       router.refresh();
-      onOpen("managerMember", {server})
+      onOpen("managerMember", {server:response.data.server})
     } catch (error) {
       console.log("[CLIENT_MEMBER_DELETE]", error);
       toast({
@@ -126,7 +126,7 @@ const ManagerMemberModel = () => {
 
   }
   return (
-    <Dialog open={isModelOpen} onOpenChange={handleClose}>
+    <Dialog open={isModelOpen} onOpenChange={handleClose} modal={false}>
       <DialogContent className="bg-zinc-100 text-black overflow-hidden p-0 pb-4">
         <DialogHeader>
           <DialogTitle className="py-4 text-center mx-4 border-b-[1px] border-zinc-300">

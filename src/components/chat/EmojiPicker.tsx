@@ -16,7 +16,7 @@ function EmojiPicker({onChange}:{onChange:(value:string) => void}) {
   return (
     <Popover>
       <PopoverTrigger className="">
-        <Smile className="size-6 bg-zinc-800 rounded-full" />
+        <Smile className="size-6 dark:bg-zinc-800 rounded-full" />
       </PopoverTrigger>
       <PopoverContent
       sideOffset={90}

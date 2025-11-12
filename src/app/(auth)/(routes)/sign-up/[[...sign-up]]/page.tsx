@@ -1,5 +1,10 @@
-import { SignUp } from '@clerk/nextjs'
+"use client"
+import { ClerkLoaded, SignUp } from '@clerk/nextjs';
 
 export default function Page() {
-  return <SignUp fallbackRedirectUrl={"/"} />
+  return (
+    <SignUp fallbackRedirectUrl={"/"} />
+
+  )
+
 }

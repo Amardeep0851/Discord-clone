@@ -98,7 +98,7 @@ function MessageFile() {
               <Button type="button" onClick={handleClose} variant="secondary">
                 {isLoading ? <Loader2 className="size-4 animate-spin" /> : "Cancel"}
               </Button>
-            <Button type="submit" variant="destructive" >
+            <Button type="submit" variant="destructive" disabled={isLoading} >
               Send
             </Button>
             </DialogFooter>
