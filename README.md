@@ -1,36 +1,168 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 💬 Discord Clone – Real-Time Messaging Platform
 
-## Getting Started
+A full-stack, real-time communication platform inspired by Discord.  
+Built with **Next.js**, **Clerk**, **WebSockets**, **role-based permissions**, and a modern UI powered by **Tailwind + Shadcn UI**.
 
-First, run the development server:
+This project includes servers, channels, real-time messaging, file uploads, roles, admin controls, and direct messaging — all wrapped in a clean, modern interface with dark/light theme support.
 
+---
+
+## 🚀 Tech Stack & Libraries
+
+### **Frontend**
+- **Next.js 15**
+- **React 19**
+- **Tailwind CSS 4**
+- **Framer Motion / Motion**
+- **Shadcn UI Components**  
+- **Lucide React** (Icons)
+- **next-themes** (Dark/Light Mode)
+- **clsx**, **tailwind-merge**, **class-variance-authority**
+- **axios**
+- **react-use**
+
+### **Forms & Validation**
+- **react-hook-form**
+- **@hookform/resolvers**
+- **zod**
+
+### **Auth**
+- **Clerk** (User login, signup, sessions)
+
+### **Messaging**
+- **WebSockets**
+- **TanStack React Query** (caching, real-time updates)
+
+### **Security**
+- **DOMPurify** for sanitizing user-generated content
+
+---
+
+## 🧩 Features
+
+### 🔐 **Authentication**
+- User sign-up / login with Clerk  
+- User data stored in database  
+- Secure session handling
+
+---
+
+### 🏛️ **Server Management**
+- Create server  
+- Upload server image  
+- Rename server  
+- Delete server  
+- Leave server (for guests not admin)
+
+---
+
+### 🔊 **Channels**
+Each server supports multiple channels:
+
+- Text channels  
+- Audio channels  
+- Video channels  
+
+Admins can:
+- Create channels  
+- Delete channels  
+
+---
+
+### 💬 **Real-Time Messaging**
+- WebSocket-powered live messaging  
+- Text messages  
+- Emoji support  
+- File uploads (images, PDFs)  
+- Edit your own messages  
+- Delete your own messages  
+- Admin/owner can delete any message  
+
+React Query keeps messages cached and only updates on new events.
+
+---
+
+### 🧑‍🤝‍🧑 **Roles & Permissions**
+Role system includes:
+- **Owner**
+- **Admin**
+- **Moderator**
+- **Guest**
+
+Permissions:
+- Owners & Admins can delete any message  
+- Only message author can edit  
+- Admin can promote/demote users  
+- Admin can remove a member  
+- Multiple moderate users allowed  
+- Guest can leave server  
+- Only admin/owner can delete channels or server  
+
+---
+
+### 📩 **Direct Messaging**
+Users can:
+- Send direct messages to anyone inside the same server  
+- Chat in real time  
+- Share files and emoji  
+
+---
+
+### 🎨 **Theme Support**
+Two themes:
+- **Dark mode**
+- **Light mode**
+
+
+---
+## 📸 Screenshots
+
+- **Create New Account Page**  
+  ![Create New Account](/screenshots/loginpage.png)
+
+- **Home Page – Dark Mode**  
+  ![Home Dark](/screenshots/home-black.png)
+
+- **Home Page – Light Mode**  
+  ![Home Light](/screenshots/home-white.png)
+
+- **Server Settings Menu**  
+  ![Server Settings Menu](/screenshots/Screenshot-2025-11-15-105657.png)
+
+- **Edit Server Info**  
+  ![Edit Server](/public/screenshots/server-setting.png)
+
+- **Invite User Link Generation**  
+  ![Invite](/screenshots/invite.png)
+
+- **User Management Dialog**  
+  ![User Roles](/screenshots/user-role.png)
+
+- **Create Channel**  
+  ![Create Channel](/screenshots/create-channel.png)
+
+- **Realtime message in channel**  
+  ![Realtime Messages](/screenshots/two-user.png)
+
+- **Direct Messaging**  
+  ![DM](/screenshots/directly-message.png)
+
+- **Mobile View**  
+  ![Mobile 1](/screenshots/mobile.png)
+
+- **Mobile View With Menu**  
+  ![Mobile 2](/screenshots/mobile-2.png)
+---
+
+## 🎥 Demo Video
+
+🎬 Full Walkthrough:  
+**Video will be uploaded soon**
+---
+
+## ⚙️ Setup Instructions
+
+1. **Clone the repo**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+git clone https://github.com/your-username/discord-clone.git
+cd discord-clone

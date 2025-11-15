@@ -2,6 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 function authLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -86,11 +87,11 @@ function authLayout({ children }: { children: React.ReactNode }) {
           </div>
           <div className="col-span-1" />
           <div className="col-span-3 flex justify-end sm:justify-center lg:pt-32 ">
-            <div className="rounded-2xl relative h-[645px] border-white flex items-end justify-center">
+            <div className={cn("rounded-2xl relative h-[645px] border-white flex justify-center", pathname?.startsWith("/sign-up") ? "items-end" : "items-start")}>
               <motion.img
                 src="/images/ch3.png"
                 alt="Mobile preview"
-                className="absolute z-50 -left-[175px] top-[247px] w-[230px] rounded-xl"
+                className={cn("absolute z-50 -left-[175px] top-[247px] w-[230px] rounded-xl ", pathname?.startsWith("/sign-up") ? "top-[247px]" : "top-[87px]")}
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 3, repeat: Infinity }}
               />
