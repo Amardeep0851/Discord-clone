@@ -118,51 +118,55 @@ Two themes:
 ## 📸 Screenshots
 
 - **Create New Account Page**  
-  ![Create New Account](/screenshots/loginpage.png)
+  <img width="1909" height="863" alt="loginpage" src="https://github.com/user-attachments/assets/626309ab-bb1c-474e-bc44-d30205340104" />
 
 - **Home Page – Dark Mode**  
-  ![Home Dark](/screenshots/home-black.png)
+  <img width="1917" height="855" alt="home-black" src="https://github.com/user-attachments/assets/7ad2d6aa-09be-4f40-9c57-19fbec0d8fc5" />
+
 
 - **Home Page – Light Mode**  
-  ![Home Light](/screenshots/home-white.png)
+ <img width="1919" height="871" alt="home white" src="https://github.com/user-attachments/assets/6993c56e-b1c0-452e-a0ac-09f3559e95ba" />
+
 
 - **Server Settings Menu**  
-  ![Server Settings Menu](/screenshots/Screenshot-2025-11-15-105657.png)
+  <img width="1919" height="854" alt="Screenshot 2025-11-15 105657" src="https://github.com/user-attachments/assets/f094206a-f72c-4104-86d0-73dcc168d70b" />
+
 
 - **Edit Server Info**  
-  ![Edit Server](/public/screenshots/server-setting.png)
+  <img width="1918" height="862" alt="server setting" src="https://github.com/user-attachments/assets/a329abc9-a133-4375-a899-552dc25fd2ee" />
+
 
 - **Invite User Link Generation**  
-  ![Invite](/screenshots/invite.png)
+  <img width="1919" height="862" alt="invite" src="https://github.com/user-attachments/assets/cd597e84-9e5c-4333-9681-d99af71e8027" />
+
 
 - **User Management Dialog**  
-  ![User Roles](/screenshots/user-role.png)
+  <img width="1917" height="855" alt="user role" src="https://github.com/user-attachments/assets/2c28b57d-5550-44e1-a393-ef8e599059bf" />
+
 
 - **Create Channel**  
-  ![Create Channel](/screenshots/create-channel.png)
+  <img width="1919" height="852" alt="create channel" src="https://github.com/user-attachments/assets/fc076aef-897c-4d3b-ab8b-1330a6593a67" />
+
 
 - **Realtime message in channel**  
-  ![Realtime Messages](/screenshots/two-user.png)
+  <img width="1919" height="875" alt="two user" src="https://github.com/user-attachments/assets/fa5e2c7b-9fae-424c-a4df-2d4b0f8d9937" />
+
 
 - **Direct Messaging**  
-  ![DM](/screenshots/directly-message.png)
+  <img width="1919" height="890" alt="directly message" src="https://github.com/user-attachments/assets/d6a215c6-faa7-404a-bdcc-8d2b148aba1c" />
+
 
 - **Mobile View**  
-  ![Mobile 1](/screenshots/mobile.png)
+  <img width="804" height="857" alt="mobile " src="https://github.com/user-attachments/assets/21aa7a92-6a04-4536-a2bd-952fc4093dc5" />
+
 
 - **Mobile View With Menu**  
-  ![Mobile 2](/screenshots/mobile-2.png)
+  <img width="795" height="846" alt="mobile 2" src="https://github.com/user-attachments/assets/043fd819-5aa1-4525-918f-e10a0ce6dfb3" />
+
 ---
 
 ## 🎥 Demo Video
 
 🎬 Full Walkthrough:  
-**Video will be uploaded soon**
+**Video will be added soon**
 ---
-
-## ⚙️ Setup Instructions
-
-1. **Clone the repo**
-```bash
-git clone https://github.com/your-username/discord-clone.git
-cd discord-clone
